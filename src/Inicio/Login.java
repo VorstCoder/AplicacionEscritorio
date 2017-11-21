@@ -8,6 +8,7 @@ package Inicio;
 import javax.jws.WebService;
 import javax.swing.JOptionPane;
 import servicios.LoginUsuario;
+import servicios.Usuario;
 /**
  *
  * @author Carlos
@@ -144,23 +145,30 @@ public class Login extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         String usu, pass;
-        boolean resultado;
+       Usuario usuario = new Usuario();
         
         usu = txtUser.getText();
         pass = txtPass.getText();
         
-        resultado = loginUsuario(usu, pass);
-        if (resultado == true){
-            JOptionPane.showMessageDialog(rootPane, "Acceso concedido");
-            
-            MenuPrincipal frame = new MenuPrincipal();
-            frame.setVisible(true);
-            dispose();
+        usuario = loginUsuario(usu, pass);
+        if (usuario.getIdTipoUsuario() == 1){ // Acceso Administrador
+          //  JOptionPane.showMessageDialog(rootPane, "Acceso concedido");
+            JOptionPane.showMessageDialog(rootPane, "Bienvenido Administrador");
+            //MenuPrincipal frame = new MenuPrincipal();
+            //frame.setVisible(true);
+            //dispose();
+        }
+        else if(usuario.getIdTipoUsuario() == 2){ // Acceso gerente
+        JOptionPane.showMessageDialog(rootPane, "Bienvenido Gerente");
+        }
+        else if(usuario.getIdTipoUsuario() == 3){ // Acceso Encargado tienda 
+        JOptionPane.showMessageDialog(rootPane, "Bienvenido Encargado de tienda");
         }
         else
         {
             JOptionPane.showMessageDialog(rootPane, "Usuario o clave incorrectos");
         }
+        
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
@@ -210,11 +218,13 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 
-    private static boolean loginUsuario(java.lang.String usuario, java.lang.String clave) {
-        servicios.WebService_Service service = new servicios.WebService_Service();
-        servicios.WebService port = service.getWebServicePort();
-        return port.loginUsuario(usuario, clave);
-    }
+        private static Usuario loginUsuario(java.lang.String usuario, java.lang.String clave) {
+                servicios.WebService_Service service = new servicios.WebService_Service();
+                servicios.WebService port = service.getWebServicePort();
+                return port.loginUsuario(usuario, clave);
+        }
+
+ 
 
    
 }
