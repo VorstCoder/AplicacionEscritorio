@@ -5,10 +5,13 @@
  */
 package Inicio;
 
+import Modelo.SesionUsuario;
 import javax.jws.WebService;
 import javax.swing.JOptionPane;
 import servicios.LoginUsuario;
 import servicios.Usuario;
+
+
 /**
  *
  * @author Carlos
@@ -146,23 +149,34 @@ public class Login extends javax.swing.JFrame {
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         String usu, pass;
        Usuario usuario = new Usuario();
-        
+  
         usu = txtUser.getText();
         pass = txtPass.getText();
         
         usuario = loginUsuario(usu, pass);
         if (usuario.getIdTipoUsuario() == 1){ // Acceso Administrador
-          //  JOptionPane.showMessageDialog(rootPane, "Acceso concedido");
             JOptionPane.showMessageDialog(rootPane, "Bienvenido Administrador");
-            //MenuPrincipal frame = new MenuPrincipal();
-            //frame.setVisible(true);
-            //dispose();
+            Menu_Administrador frameAdm = new Menu_Administrador();
+            frameAdm.setVisible(true);
+            dispose();
         }
         else if(usuario.getIdTipoUsuario() == 2){ // Acceso gerente
         JOptionPane.showMessageDialog(rootPane, "Bienvenido Gerente");
+        Menu_Gerente frameGer = new Menu_Gerente();
+        frameGer.setVisible(true);
+        dispose();
         }
         else if(usuario.getIdTipoUsuario() == 3){ // Acceso Encargado tienda 
+            SesionUsuario.getInstancia();
+      SesionUsuario.instancia.setUsuario(usuario.getUsuario());
+       SesionUsuario.instancia.setClave(usuario.getClave());
+       SesionUsuario.instancia.setIdTipoUsuario(usuario.getIdTipoUsuario());
+       SesionUsuario.instancia.setIdTienda(usuario.getIdTienda());
+      
         JOptionPane.showMessageDialog(rootPane, "Bienvenido Encargado de tienda");
+        Menu_Encargado frameEnc = new Menu_Encargado();
+        frameEnc.setVisible(true);
+        dispose();
         }
         else
         {

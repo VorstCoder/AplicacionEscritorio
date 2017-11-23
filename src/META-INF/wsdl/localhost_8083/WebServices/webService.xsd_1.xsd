@@ -26,6 +26,10 @@
 
 <xs:element name="TraerOfertasxPreferenciaResponse" type="tns:TraerOfertasxPreferenciaResponse"/>
 
+<xs:element name="agregarProducto" type="tns:agregarProducto"/>
+
+<xs:element name="agregarProductoResponse" type="tns:agregarProductoResponse"/>
+
 <xs:element name="crearVisualizacionOferta" type="tns:crearVisualizacionOferta"/>
 
 <xs:element name="crearVisualizacionOfertaResponse" type="tns:crearVisualizacionOfertaResponse"/>
@@ -86,6 +90,10 @@
 
 <xs:element name="traerRubroResponse" type="tns:traerRubroResponse"/>
 
+<xs:element name="traerSucursalesxIdTienda" type="tns:traerSucursalesxIdTienda"/>
+
+<xs:element name="traerSucursalesxIdTiendaResponse" type="tns:traerSucursalesxIdTiendaResponse"/>
+
 <xs:element name="traerTiendas" type="tns:traerTiendas"/>
 
 <xs:element name="traerTiendasResponse" type="tns:traerTiendasResponse"/>
@@ -139,11 +147,13 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="traerTodasOfertas">
-<xs:sequence/>
+<xs:complexType name="traerOfertasxTienda">
+<xs:sequence>
+<xs:element name="idtienda" type="xs:int"/>
+</xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="traerTodasOfertasResponse">
+<xs:complexType name="traerOfertasxTiendaResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:oferta" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
@@ -185,6 +195,8 @@
 <xs:sequence>
 <xs:element name="ciudad" type="xs:string" minOccurs="0"/>
 <xs:element name="direccion" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="direcionUnica" type="xs:string" minOccurs="0"/>
+<xs:element name="idSucursal" type="xs:int"/>
 <xs:element name="idsucursal" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
@@ -199,42 +211,6 @@
 <xs:complexType name="IOException">
 <xs:sequence>
 <xs:element name="message" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="traerOfertasxTienda">
-<xs:sequence>
-<xs:element name="idtienda" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="traerOfertasxTiendaResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:oferta" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="traerConsumidor">
-<xs:sequence>
-<xs:element name="rutconsumidor" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="traerConsumidorResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:consumidor" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="consumidor">
-<xs:sequence>
-<xs:element name="activocupon" type="xs:int"/>
-<xs:element name="apellidop" type="xs:string" minOccurs="0"/>
-<xs:element name="categoria" type="tns:categoria" minOccurs="0"/>
-<xs:element name="nombre" type="xs:string" minOccurs="0"/>
-<xs:element name="puntos" type="xs:int"/>
-<xs:element name="rutconsumidor" type="xs:string" minOccurs="0"/>
-<xs:element name="tienda" type="tns:tienda" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -269,6 +245,24 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="agregarProducto">
+<xs:sequence>
+<xs:element name="codigobarra" type="xs:int"/>
+<xs:element name="marca" type="xs:string" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="rutaimagen" type="xs:string" minOccurs="0"/>
+<xs:element name="precio" type="xs:int"/>
+<xs:element name="fechaexpiracion" type="xs:string" minOccurs="0"/>
+<xs:element name="idcategoria" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="agregarProductoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="selectMaxIdDescuento">
 <xs:sequence/>
 </xs:complexType>
@@ -276,19 +270,6 @@
 <xs:complexType name="selectMaxIdDescuentoResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="restarPuntos">
-<xs:sequence>
-<xs:element name="puntos" type="xs:int"/>
-<xs:element name="rut" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="restarPuntosResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:boolean"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -349,16 +330,75 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="ComprobarValoracionAnterior">
+<xs:complexType name="loginConsumidor">
 <xs:sequence>
-<xs:element name="idoferta" type="xs:int"/>
+<xs:element name="rut" type="xs:string" minOccurs="0"/>
+<xs:element name="clave" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loginConsumidorResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="traerTodasOfertas">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="traerTodasOfertasResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:oferta" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="traerConsumidor">
+<xs:sequence>
+<xs:element name="rutconsumidor" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="traerConsumidorResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:consumidor" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="consumidor">
+<xs:sequence>
+<xs:element name="activocupon" type="xs:int"/>
+<xs:element name="apellidop" type="xs:string" minOccurs="0"/>
+<xs:element name="categoria" type="tns:categoria" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="puntos" type="xs:int"/>
+<xs:element name="rutconsumidor" type="xs:string" minOccurs="0"/>
+<xs:element name="tienda" type="tns:tienda" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="restarPuntos">
+<xs:sequence>
+<xs:element name="puntos" type="xs:int"/>
 <xs:element name="rut" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="ComprobarValoracionAnteriorResponse">
+<xs:complexType name="restarPuntosResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="traerSucursalesxIdTienda">
+<xs:sequence>
+<xs:element name="idtienda" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="traerSucursalesxIdTiendaResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:sucursal" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -371,6 +411,19 @@
 <xs:complexType name="traerDetalleRubroResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:descuento" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ComprobarValoracionAnterior">
+<xs:sequence>
+<xs:element name="idoferta" type="xs:int"/>
+<xs:element name="rut" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ComprobarValoracionAnteriorResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -446,19 +499,6 @@
 <xs:complexType name="traerInformacionConsumidorResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:consumidor" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="loginConsumidor">
-<xs:sequence>
-<xs:element name="rut" type="xs:string" minOccurs="0"/>
-<xs:element name="clave" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="loginConsumidorResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:boolean"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>

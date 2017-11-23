@@ -6,4 +6,6 @@
     <system systemId="http://localhost:8083/WebServicesMisOfertas/webService?xsd=1" uri="wsdl/localhost_8083/WebServicesMisOfertas/webService.xsd_1.xsd"/>
     <system systemId="http://localhost:9090/WebServicesMisOfertas/webService?wsdl" uri="wsdl/localhost_9090/WebServicesMisOfertas/webService.wsdl"/>
     <system systemId="http://localhost:9090/WebServicesMisOfertas/webService?xsd=1" uri="wsdl/localhost_9090/WebServicesMisOfertas/webService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8083/WebServices/webService?wsdl" uri="wsdl/localhost_8083/WebServices/webService.wsdl"/>
+    <system systemId="http://localhost:8083/WebServices/webService?xsd=1" uri="wsdl/localhost_8083/WebServices/webService.xsd_1.xsd"/>
 </catalog>
