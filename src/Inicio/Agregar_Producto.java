@@ -394,7 +394,7 @@ public class Agregar_Producto extends javax.swing.JFrame {
         return port.agregarProducto(codigoBarra, marca, nombre, rutaimagen, precio, fechaExpiracion, categoria);
     }
 
-    private static java.util.List<servicios.Sucursal> traerSucursalesxIdTienda(int idtienda) {
+    private static java.util.List<servicios.Sucursal> traerSucursalesxIdTienda(int idtienda) throws IOException_Exception {
         servicios.WebService_Service service = new servicios.WebService_Service();
         servicios.WebService port = service.getWebServicePort();
         return port.traerSucursalesxIdTienda(idtienda);

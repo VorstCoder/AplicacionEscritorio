@@ -18,8 +18,8 @@
     </target>
     <target name="wsimport-client-webService" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/webService"/>
-        <property name="wsdl-webService" location="xml-resources/web-service-references/webService/wsdl/localhost_8083/WebServices/webService.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/webService" destdir="${build.generated.dir}/jax-wsCache/webService" wsdl="${wsdl-webService}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8083/WebServices/webService?wsdl" xnocompile="true" xendorsed="true">
+        <property name="wsdl-webService" location="xml-resources/web-service-references/webService/wsdl/localhost_9090/WebServices/webService.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/webService" destdir="${build.generated.dir}/jax-wsCache/webService" wsdl="${wsdl-webService}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:9090/WebServices/webService?wsdl" xnocompile="true" xendorsed="true">
             <depends file="${wsdl-webService}"/>
             <produces dir="${build.generated.dir}/jax-wsCache/webService"/>
         </wsimport>
